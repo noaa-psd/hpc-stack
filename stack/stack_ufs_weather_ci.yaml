@@ -24,10 +24,6 @@ png:
   build: YES
   version: 1.6.35
 
-szip:
-  build: YES
-  version: 2.1.1
-
 jasper:
   build: YES
   version: 2.0.25
