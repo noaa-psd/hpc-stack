@@ -16,13 +16,8 @@ if $MODULES; then
 
     prefix="${PREFIX:-"/opt/modules"}/core/$name/$version"
     if [[ -d $prefix ]]; then
-      if [[ $OVERWRITE =~ [yYtT] ]]; then
-          echo "WARNING: $prefix EXISTS: OVERWRITING!"
-          $SUDO rm -rf $prefix
-      else
-          echo "WARNING: $prefix EXISTS, SKIPPING"
-          exit 0
-      fi
+        [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!";$SUDO rm -rf $prefix; $SUDO mkdir $prefix ) \
+                                   || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
     fi
 else
     prefix=${CMAKE_ROOT:-"/usr/local"}
@@ -31,7 +26,7 @@ fi
 software=$name-$version
 cd ${HPC_STACK_ROOT}/${PKGDIR:-"pkg"}
 URL="https://cmake.org/files/v${version%.*}/$software.tar.gz"
-[[ -d $software ]] || ( $WGET $URL; tar -xf $software.tar.gz )
+[[ -d $software ]] || ( tar -xf $software.tar.gz )
 [[ ${DOWNLOAD_ONLY} =~ [yYtT] ]] && exit 0
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
 

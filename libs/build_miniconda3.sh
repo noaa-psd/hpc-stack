@@ -12,14 +12,8 @@ pyversion=${3:-${STACK_miniconda3_pyversion:-}}
 if $MODULES; then
   prefix="${PREFIX:-"/opt/modules"}/core/$name/$version"
   if [[ -d $prefix ]]; then
-      if [[ $OVERWRITE =~ [yYtT] ]]; then
-          echo "WARNING: $prefix EXISTS: OVERWRITING!"
-          $SUDO rm -rf $prefix
-          $SUDO mkdir $prefix
-      else
-          echo "WARNING: $prefix EXISTS, SKIPPING"
-          exit 0
-      fi
+    [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!"; $SUDO rm -rf $prefix; $SUDO mkdir $prefix ) \
+                               || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
   fi
 else
   prefix=${MINICONDA3_ROOT:-"/usr/local"}
@@ -49,7 +43,7 @@ URL="$URL_ROOT/miniconda"
 [[ -f $installer ]] || $WGET $URL/$installer
 [[ ${DOWNLOAD_ONLY} =~ [yYtT] ]] && exit 0
 
-$SUDO bash $installer -b -p $prefix -s
+$SUDO bash $installer -b -p $prefix -s -u
 
 # This is a multiuser installation of Miniconda
 #https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/admin-multi-user-install.html

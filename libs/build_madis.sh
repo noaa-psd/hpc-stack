@@ -13,7 +13,7 @@ cd ${HPC_STACK_ROOT}/${PKGDIR:-"pkg"}
 
 software=$name-$version
 URL="https://madis-data.ncep.noaa.gov/source/$software.tar.gz"
-[[ -f $software.tar.gz ]] || ( $WGET $URL )
+# [[ -f $software.tar.gz ]] || ( $WGET $URL )
 [[ ${DOWNLOAD_ONLY} =~ [yYtT] ]] && exit 0
 
 if $MODULES; then
@@ -32,13 +32,8 @@ if $MODULES; then
   set -x
   prefix="${PREFIX:-"/opt/modules"}/$compiler/$mpi/$name/$version"
   if [[ -d $prefix ]]; then
-      if [[ $OVERWRITE =~ [yYtT] ]]; then
-          echo "WARNING: $prefix EXISTS: OVERWRITING!"
-          $SUDO rm -rf $prefix
-      else
-          echo "WARNING: $prefix EXISTS, SKIPPING"
-          exit 0
-      fi
+    [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!";$SUDO rm -rf $prefix ) \
+                               || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
   fi
 else
   prefix=${MADIS_ROOT:-"/usr/local"}

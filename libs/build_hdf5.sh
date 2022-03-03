@@ -25,17 +25,14 @@ if $MODULES; then
 
   prefix="${PREFIX:-"/opt/modules"}/$compiler/$mpi/$name/$version"
   if [[ -d $prefix ]]; then
-      if [[ $OVERWRITE =~ [yYtT] ]]; then
-          echo "WARNING: $prefix EXISTS: OVERWRITING!"
-          $SUDO rm -rf $prefix
-          $SUDO mkdir $prefix
-      else
-          echo "WARNING: $prefix EXISTS, SKIPPING"
-          exit 0
-      fi
+    [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!";$SUDO rm -rf $prefix; $SUDO mkdir $prefix ) \
+                               || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
   fi
 
 else
+    module load cmake/3.20.1
+    module load intel/18.0.5.274
+    module load impi/2018.4.274
     prefix=${HDF5_ROOT:-"/usr/local"}
 fi
 

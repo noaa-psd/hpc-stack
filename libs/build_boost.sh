@@ -9,9 +9,9 @@ level=${2:-${STACK_boost_level:-"full"}}
 cd ${HPC_STACK_ROOT}/${PKGDIR:-"pkg"}
 
 software=$name\_$(echo $version | sed 's/\./_/g')
-URL="https://boostorg.jfrog.io/artifactory/main/release/$version/source/$software.tar.gz"
+URL="https://sourceforge.net/projects/boost/files/boost/$version/$software.tar.gz"
 
-[[ -d $software ]] || $WGET $URL
+# [[ -d $software ]] || $WGET $URL
 [[ ${DOWNLOAD_ONLY} =~ [yYtT] ]] && exit 0
 [[ -d $software ]] || tar -xf $software.tar.gz
 [[ -d $software ]] && cd $software || ( echo "$software does not exist, ABORT!"; exit 1 )
@@ -50,13 +50,8 @@ if $MODULES; then
   set -x
   prefix="${PREFIX:-"$HOME/opt"}/$compiler/$mpi/$name/$version"
   if [[ -d $prefix ]]; then
-      if [[ $OVERWRITE =~ [yYtT] ]]; then
-          echo "WARNING: $prefix EXISTS: OVERWRITING!"
-          $SUDO rm -rf $prefix
-      else
-          echo "WARNING: $prefix EXISTS, SKIPPING"
-          exit 0
-      fi
+    [[ $OVERWRITE =~ [yYtT] ]] && ( echo "WARNING: $prefix EXISTS: OVERWRITING!";$SUDO rm -rf $prefix ) \
+                               || ( echo "WARNING: $prefix EXISTS, SKIPPING"; exit 1 )
   fi
 else
   prefix=${BOOST_ROOT:-"/usr/local"}

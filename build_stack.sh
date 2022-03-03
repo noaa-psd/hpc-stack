@@ -10,7 +10,7 @@ set -eu
 
 # root directory for the repository
 export HPC_STACK_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
+export I_MPI_PMI_LIBRARY='/apps/slurm/default/lib/libpmi2.so'
 # ==============================================================================
 usage() {
   set +x
@@ -103,6 +103,11 @@ else
   no_modules
   set_no_modules_path
   set_pkg_root
+  module load cmake/3.20.1
+  module use /scratch1/NCEPDEV/nems/emc.nemspara/soft/modulefiles
+  module load miniconda3/3.7.3
+  module load intel/18.0.5.274
+  module load impi/2018.4.274
 fi
 
 # ==============================================================================
@@ -121,9 +126,9 @@ fi
 # ==============================================================================
 #----------------------
 # Compiler and MPI
-build_lib gnu
+# build_lib gnu
 $MODULES || { [[ ${STACK_gnu_build:-} =~ [yYtT] ]] && export PATH="$PREFIX/bin:$PATH"; }
-build_lib mpi
+# build_lib mpi
 $MODULES || { [[ ${STACK_mpi_build:-} =~ [yYtT] ]] && export PATH="$PREFIX/bin:$PATH"; }
 
 # ==============================================================================
@@ -132,15 +137,19 @@ $MODULES || { [[ ${STACK_mpi_build:-} =~ [yYtT] ]] && export PATH="$PREFIX/bin:$
 # - should add a check at some point to see if they are already there.
 # this can be done in each script individually
 # it might warrant a --force flag to force rebuild when desired
+module load cmake/3.20.1
+module load intelpython/2021.3.0
+module load intel/18.0.5.274
+module load impi/2018.4.274
+
 build_lib cmake
 build_lib udunits
 build_lib jpeg
 build_lib zlib
-build_lib libpng
+build_lib png
 build_lib szip
 build_lib jasper
 build_lib sqlite
-build_lib libtiff
 build_lib proj
 build_lib geos
 
