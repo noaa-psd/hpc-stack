@@ -14,7 +14,7 @@ zlib:
   version: 1.2.11
 
 png:
-  build: YES
+  build: NO
   shared: NO
   version: 1.6.35
 
