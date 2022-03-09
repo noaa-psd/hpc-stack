@@ -104,8 +104,7 @@ else
   set_no_modules_path
   set_pkg_root
   module load cmake/3.20.1
-  module use /scratch1/NCEPDEV/nems/emc.nemspara/soft/modulefiles
-  module load miniconda3/3.7.3
+  module load intelpython/3.6.8
   module load intel/18.0.5.274
   module load impi/2018.4.274
 fi

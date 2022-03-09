@@ -13,8 +13,8 @@ zlib:
   shared: NO
   version: 1.2.11
 
-libpng:
-  build: YES
+png:
+  build: NO
   shared: NO
   version: 1.6.35
 
@@ -26,7 +26,7 @@ szip:
 jasper:
   build: YES
   shared: NO
-  version: 2.0.25
+  version: 2.0.22
 
 udunits:
   build: YES
@@ -36,7 +36,7 @@ udunits:
 hdf5:
   build: YES
   version: 1.10.6
-  shared: YES
+  shared: NO
   enable_szip: NO
   enable_zlib: YES
 
@@ -47,7 +47,7 @@ pnetcdf:
 
 netcdf:
   build: YES
-  shared: YES
+  shared: NO
   enable_pnetcdf: NO
   disable_cxx: NO
   version_c: 4.7.4
@@ -68,7 +68,7 @@ cdo:
 
 pio:
   build: YES
-  version: 2.5.3
+  version: 2.5.2
   enable_pnetcdf: NO
   enable_gptl: NO
 
@@ -80,7 +80,7 @@ esmf:
   debug: NO
 
 fms:
-  build: NO
+  build: yes
   version: 2020.04.03
   repo: noaa-gfdl
   cmake_opts: "-DGFS_PHYS=ON -D64BIT=ON -DOPENMP=ON"
@@ -156,14 +156,14 @@ nemsiogfs:
 
 w3emc:
   build: YES
-  version: v2.9.2
+  version: v2.9.0
   install_as: 2.9.2
   is_nceplib: YES
 
 g2:
   build: YES
-  version: v3.4.4
-  install_as: 3.4.4
+  version: v3.4.3
+  install_as: 3.4.3
   is_nceplib: YES
 
 g2c:
@@ -174,22 +174,23 @@ g2c:
 
 g2tmpl:
   build: YES
-  version: v1.9.1
-  install_as: 1.9.1
+  version: v1.10.0
+  install_as: 1.10.0
   is_nceplib: YES
 
 crtm:
   build: YES
-  version: v2.3.0
-  install_as: 2.3.0
+  version: v2.4.0
+  install_as: 2.4.0
   is_nceplib: YES
   install_fix: YES
 
 upp:
   build: YES
-  version: upp_v10.0.5
-  install_as: 10.0.5
+  version: upp_v10.0.8
+  install_as: 10.0.8
   openmp: ON
+  is_nceplib: YES
 
 wrf_io:
   build: YES
@@ -271,7 +272,7 @@ json_schema_validator:
 
 pybind11:
   build: YES
-  version: 2.5.0
+  version: 2.7.0
 
 ecbuild:
   build: YES
@@ -293,16 +294,45 @@ atlas:
   version: 0.24.1
   repo: ecmwf
 
-miniconda3:
+madis:
   build: YES
+  version: 4.3
+
+esma_cmake:
+  build: YES
+  repo: GEOS-ESM
+  version: v3.4.3
+
+cmakemodules:
+  build: YES
+  repo: NOAA-EMC
+  version: v1.2.0
+
+gftl_shared:
+  build: NO
+  repo: Goddard-Fortran-Ecosystem
+  version: v1.3.0
+
+yafyaml:
+  build: NO
+  repo: Goddard-Fortran-Ecosystem
+  version: v0.5.1
+
+mapl:
+  build: NO
+  repo: GEOS-ESM
+  version: v2.7.3
+
+miniconda3:
+  build: NO
   version: 4.6.14
 
 r2d2:
-  build: YES
+  build: NO
   version: 1.0.0
   is_pyvenv: YES
 
 hofxdiag:
-  build: YES
+  build: NO
   version: 1.0.0
   is_pyvenv: YES
