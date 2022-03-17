@@ -107,6 +107,7 @@ else
   module load intelpython/3.6.8
   module load intel/18.0.5.274
   module load impi/2018.4.274
+ #module load intel/2020.2 impi/2020.2
 fi
 
 # ==============================================================================
@@ -140,12 +141,14 @@ module load cmake/3.20.1
 module load intelpython/2021.3.0
 module load intel/18.0.5.274
 module load impi/2018.4.274
+#module load intel/2020.2 impi/2020.2
 
 build_lib cmake
 build_lib udunits
 build_lib jpeg
 build_lib zlib
-build_lib png
+build_lib libpng
+build_lib libtiff
 build_lib szip
 build_lib jasper
 build_lib sqlite

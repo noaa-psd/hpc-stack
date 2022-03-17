@@ -13,8 +13,8 @@ zlib:
   shared: NO
   version: 1.2.11
 
-libpng:
-  build: YES
+png:
+  build: NO
   shared: NO
   version: 1.6.35
 
@@ -80,7 +80,7 @@ esmf:
   debug: NO
 
 fms:
-  build: YES
+  build: yes
   version: 2020.04.03
   repo: noaa-gfdl
   cmake_opts: "-DGFS_PHYS=ON -D64BIT=ON -DOPENMP=ON"
@@ -309,23 +309,19 @@ cmakemodules:
   version: v1.2.0
 
 gftl_shared:
-  build: YES
+  build: NO
   repo: Goddard-Fortran-Ecosystem
-  version: v1.3.3
+  version: v1.3.0
 
 yafyaml:
-  build: YES
+  build: NO
   repo: Goddard-Fortran-Ecosystem
   version: v0.5.1
 
 mapl:
-  build: YES
+  build: NO
   repo: GEOS-ESM
   version: v2.7.3
-
-geos:                                                                                                                                                       
-  build: YES                                                                                                                                                
-  version: 3.8.1
 
 miniconda3:
   build: NO
@@ -340,16 +336,3 @@ hofxdiag:
   build: NO
   version: 1.0.0
   is_pyvenv: YES
-
-libtiff:
-  build: YES
-  version: 4.0.3
-  cmake_opts: "-DENABLE_CURL=OFF -DBUILD_PROJSYNC=OFF"
-
-sqlite:
-  build: YES
-  version: 3.32.3
-
-proj:
-  build: YES
-  version: 7.1.0

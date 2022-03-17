@@ -3,6 +3,8 @@
 # Compiler/MPI combination
 export HPC_COMPILER="intel/18.0.5.274"
 export HPC_MPI="impi/2018.4.274"
+#export HPC_COMPILER="intel/2020.2"
+#export HPC_MPI="impi/2020.2"
 export HPC_PYTHON="intelpython/3.6.8"
 
 # Build options
@@ -24,6 +26,8 @@ module load cmake/3.20.1
 module load intelpython/3.6.8
 module load intel/18.0.5.274
 module load impi/2018.4.274
+#module load intel/2020.2
+#module load impi/2020.2
 
 # Build FMS with AVX2 flags
 export STACK_fms_CFLAGS="-march=core-avx2"

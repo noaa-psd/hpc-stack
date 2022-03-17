@@ -23,20 +23,51 @@ host=$(uname -s)
 # This will allow debug version of software (ESMF) to be installed next to the optimized version (this is only affected for $MODULES)
 [[ $enable_debug =~ [yYtT] ]] && version_install=$version-debug || version_install=$version
 
+ module purge
+
+ export PATH=.:$PATH
+ export HPC_OPT=/contrib/Wei.Huang/opt
+
+ export MODULEPATH=/apps/modules/modulefamilies/intel:/apps/modules/modulefiles
+ module use $HPC_OPT/modulefiles/core
+ module use $HPC_OPT/modulefiles/compiler/intel/18.0.5.274
+ module use $HPC_OPT/modulefiles/mpi/intel/18.0.5.274/impi/2018.4.274
+
+ module load intel/18.0.5.274
+ module load impi/2018.4.274
+ module load cmake/3.20.1
+
+ module load jpeg/9.1.0    udunits/2.2.28  \
+             jasper/2.0.22          szip/2.1.1    zlib/1.2.11 \
+             hdf5/1.10.6   netcdf/4.7.4
+ module load hpc-impi/2018.4.274
+
+ export FC=ifort
+ export CC=icc
+ export CXX=icpc
+
+ export SERIAL_FC=ifort
+ export SERIAL_CC=icc
+ export SERIAL_CXX=icpc
+
+ export MPI_FC=mpiifort
+ export MPI_CC=mpiicc
+ export MPI_CXX=mpiicpc
+
 if $MODULES; then
   set +x
-  source $MODULESHOME/init/bash
-  module load hpc-$HPC_COMPILER
-  module try-load zlib
-  module try-load szip
-  [[ -z $mpi ]] || module load hpc-$HPC_MPI
-  module load hdf5
-  if [[ ! -z $mpi ]]; then
-    [[ $enable_pnetcdf =~ [yYtT] ]] && module load pnetcdf
-  fi
-  module load netcdf
-  module try-load udunits
-  module list
+# source $MODULESHOME/init/bash
+# module load hpc-$HPC_COMPILER
+# module try-load zlib
+# module try-load szip
+# [[ -z $mpi ]] || module load hpc-$HPC_MPI
+# module load hdf5
+# if [[ ! -z $mpi ]]; then
+#   [[ $enable_pnetcdf =~ [yYtT] ]] && module load pnetcdf
+# fi
+# module load netcdf
+# module try-load udunits
+# module list
   set -x
 
   prefix="${PREFIX:-"/opt/modules"}/$compiler/$mpi/$name/$version_install"
@@ -67,7 +98,7 @@ fi
 export F9X=$FC
 export FFLAGS="${STACK_FFLAGS:-} ${STACK_esmf_FFLAGS:-} -fPIC"
 export CFLAGS="${STACK_CFLAGS:-} ${STACK_esmf_CFLAGS:-} -fPIC"
-export CXXFLAGS="${STACK_CXXFLAGS:-} ${STACK_esmf_CXXFLAGS:-} -fPIC"
+export CXXFLAGS="${STACK_CXXFLAGS:-} ${STACK_esmf_CXXFLAGS:-} -fPIC -D_GLIBCXX_USE_CXX11_ABI=0"
 export FCFLAGS="$FFLAGS"
 
 URL="https://github.com/esmf-org/esmf"
